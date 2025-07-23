@@ -1,0 +1,42 @@
+{% extends 'crud/base.html' %}
+{% block title %}ユーザー編集{% endblock %}
+{% block content %}
+<h2>ユーザー編集</h2>
+<form class="flex-form" action="{{ url_for('crud.edit_user', user_id=user.id) }}" method="POST" novalidate>
+    {{ form.csrf_token }}
+    <div class="form-row">
+        {{ form.username.label }}
+        <div class="form-input">
+            {{ form.username(placeholder="ユーザー名", value=user.username) }}
+            {% for error in form.username.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        {{ form.email.label }}
+        <div class="form-input">
+            {{ form.email(placeholder="メールアドレス", value=user.email) }}
+            {% for error in form.email.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        {{ form.password.label }}
+        <div class="form-input">
+            {{ form.password(placeholder="パスワード") }}
+            {% for error in form.password.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        <input type="submit" value="更新" class="submit-btn" />
+    </div>
+</form>
+<form action="{{ url_for('crud.delete_user', user_id=user.id) }}" method="POST" style="margin-top:16px;">
+    {{ form.csrf_token }}
+    <input type="submit" value="削除" class="submit-btn" style="background:#e74c3c;">
+</form>
+{% endblock %}

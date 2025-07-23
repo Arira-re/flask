@@ -1,0 +1,10 @@
+{% extends "blogs/base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p>投稿者: {{ post.user.username }} | 投稿日: {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+<div>{{ html_body|safe }}</div>
+<a href="{{ url_for('blogs.index') }}">記事一覧へ戻る</a>
+{% endblock %}

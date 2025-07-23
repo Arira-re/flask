@@ -1,0 +1,44 @@
+{% extends "auth/base.html" %}
+
+{% block title %}新規登録{% endblock %}
+
+{% block content %}
+<h2>新規登録</h2>
+<form class="flex-form" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {% for message in get_flashed_messages() %}
+    <div class="dt-auth-flash">{{ message }}</div>
+    {% endfor %}
+    <div class="form-row">
+        {{ form.username.label }}
+        <div class="form-input">
+            {{ form.username(placeholder="ユーザー名") }}
+            {% for error in form.username.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        {{ form.email.label }}
+        <div class="form-input">
+            {{ form.email(placeholder="メールアドレス") }}
+            {% for error in form.email.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        {{ form.password.label }}
+        <div class="form-input">
+            {{ form.password(placeholder="パスワード") }}
+            {% for error in form.password.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        {{ form.submit(class_="submit-btn") }}
+    </div>
+</form>
+<p class="form-link">すでにアカウントをお持ちですか？ <a href="{{ url_for('auth.login') }}">ログイン</a></p>
+{% endblock %}

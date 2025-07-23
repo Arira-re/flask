@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('auth.static', filename='style.css') }}">
+</head>
+
+<body>
+    <section class="max-w-3xl mx-auto px-4 sm:px-6 xl:max-w-5xl xl:px-0">
+        <div class="flex flex-col justify-between sp">
+            <header class="flex items-center justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="mr-1">
+                        <img alt="logo" width="48" height="48" class="rounded-full flex items-center"
+                            src="images/logo.jpg" onerror="this.onerror=null;this.src='../images/logo.jpg';">
+                    </div>
+                    <div id="main-text" class="flex items-center"><a href="index.html">Lacto-f</a></div>
+                </div>
+                <div id="gl_navi" class="flex items-center">
+                    <a class="mr-1" href="blog.html">Blog</a>
+                    <a class="mr-1" href="about.html">About</a>
+                </div>
+            </header>
+            <main class="sp-h">
+                {% block content %}{% endblock %}
+
+                {% block footer %}
+            </main>
+            <footer>
+                <div class="sp flex flex-col items-center">
+                    <div class="container mx-auto px-5 py-6 top-line">
+                        <div class="-mx-4 -mb-10 flex flex-wrap text-center">
+                            <div class="w-full px-4 sm:w-1/2 lg:w-1/4">
+                                <h3 class="mb-3">Virtual Reality</h3>
+                                <nav class="list-none mb-10">
+                                    <li><a target="_blank" rel="noopener noreferrer" href="404.html">VRChat</a></li>
+                                    <li><a>cluster</a></li>
+                                </nav>
+                            </div>
+                            <div class="w-full px-4 sm:w-1/2 lg:w-1/4">
+                                <h3 class="mb-3">SNS</h3>
+                                <nav class="list-none mb-10">
+                                    <li><a>Twitter</a></li>
+                                    <li><a target="_blank" rel="noopener noreferrer"
+                                            href="https://discord.com/users/">Discord</a></li>
+                                </nav>
+                            </div>
+                            <div class="w-full px-4 sm:w-1/2 lg:w-1/4">
+                                <h3 class="mb-3">Other</h3>
+                                <nav class="list-none mb-10">
+                                    <li><a target="_blank" rel="noopener noreferrer" href="message.html">メールを送る</a>
+                                    </li>
+                                    <li><a target="_blank" rel="noopener noreferrer" href="404.html">ほしいものリスト</a>
+                                    </li>
+                                </nav>
+                            </div>
+                            <div class="w-full px-4 sm:w-1/2 lg:w-1/4">
+                                <img alt="footer-gl" width="213" height="120" src="images/footer-gl.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <p id="andername">&copy; 2025 Lacto-f</p>
+        </div>
+    </section>
+</body>
+
+</html>
+{% endblock %}

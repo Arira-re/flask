@@ -1,0 +1,22 @@
+{% extends "blogs/base.html" %}
+
+{% block title %}ブログ記事一覧{% endblock %}
+
+{% block content %}
+<h1>ブログ記事一覧</h1>
+<p>あなたのユーザーID: {{ current_user.id }}</p>
+<p>あなたの感情スコア: {{ user.avg_score|default(0) }}</p>
+<a href="{{ url_for('blogs.create') }}" class="btn">新規作成</a>
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="{{ url_for('blogs.detail', post_id=post.id) }}">
+            <strong>{{ post.title }}</strong>
+        </a>
+        （投稿者ID: {{ post.user_id }} / 投稿日: {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}）
+    </li>
+    {% else %}
+    <li>記事はまだありません。</li>
+    {% endfor %}
+</ul>
+{% endblock %}

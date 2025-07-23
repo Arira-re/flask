@@ -1,0 +1,27 @@
+{% extends "blogs/base.html" %}
+
+{% block title %}記事作成{% endblock %}
+
+{% block content %}
+<h2>記事作成</h2>
+<form method="post" class="flex-form">
+    {{ form.hidden_tag() }}
+    <div class="form-row">
+        {{ form.title.label }}
+        {{ form.title(class="form-input", placeholder="タイトル") }}
+        {% for error in form.title.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="form-row">
+        {{ form.content_md.label }}
+        {{ form.content_md(class="form-input", placeholder="本文") }}
+        {% for error in form.content_md.errors %}
+        <span class="form-error">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div class="form-row">
+        {{ form.submit(class="submit-btn") }}
+    </div>
+</form>
+{% endblock %}

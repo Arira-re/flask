@@ -1,0 +1,26 @@
+{% extends "crud/base.html" %}
+
+{% block title %}ユーザー一覧{% endblock %}
+
+{% block content %}
+<h2>ユーザー一覧</h2>
+<a href="{{ url_for('crud.create_user') }}" class="btn">ユーザー新規作成</a>
+<table class="w-full table-userlist" style="background:#232323; border-radius:8px; overflow:hidden;">
+    <tr style="background:#292929; color:#fff;">
+        <th class="text-center">ID</th>
+        <th class="text-center">ユーザー名</th>
+        <th class="text-center">メールアドレス</th>
+        <th class="text-center">操作</th>
+    </tr>
+    {% for user in users %}
+    <tr style="border-bottom:1px solid #333;">
+        <td class="text-center">{{ user.id }}</td>
+        <td class="text-center">{{ user.username }}</td>
+        <td class="text-center">{{ user.email }}</td>
+        <td class="text-center">
+            <a href="{{ url_for('crud.edit_user', user_id=user.id) }}" class="action-link">編集</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

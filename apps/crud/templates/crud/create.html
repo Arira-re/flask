@@ -1,0 +1,41 @@
+{% extends "crud/base.html" %}
+{% block title %}ユーザー新規作成{% endblock %}
+{% block content %}
+<h2>ユーザー新規作成</h2>
+<form class="flex-form" action="{{ url_for('crud.create_user') }}" method="POST" novalidate>
+    {{ form.csrf_token }}
+    {% for message in get_flashed_messages() %}
+        <div class="dt-auth-flash">{{ message }}</div>
+    {% endfor %}
+    <div class="form-row">
+        {{ form.username.label }}
+        <div class="form-input">
+            {{ form.username(placeholder="ユーザー名") }}
+            {% for error in form.username.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        {{ form.email.label }}
+        <div class="form-input">
+            {{ form.email(placeholder="メールアドレス") }}
+            {% for error in form.email.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        {{ form.password.label }}
+        <div class="form-input">
+            {{ form.password(placeholder="パスワード") }}
+            {% for error in form.password.errors %}
+            <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-row">
+        {{ form.submit(class_="submit-btn") }}
+    </div>
+</form>
+{% endblock %}
