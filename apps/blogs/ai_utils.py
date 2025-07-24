@@ -3,17 +3,33 @@ from transformers import pipeline
 MODEL_NAME = "Mizuiro-sakura/luke-japanese-large-sentiment-analysis-wrime"
 sentiment_analyzer = pipeline("text-classification", model=MODEL_NAME)
 
+LABEL_MAP = {
+    "LABEL_0": "喜び",
+    "LABEL_1": "期待",
+    "LABEL_2": "信頼",
+    "LABEL_3": "怒り",
+    "LABEL_4": "嫌悪",
+    "LABEL_5": "恐れ",
+    "LABEL_6": "悲しみ",
+    "LABEL_7": "驚き"
+}
+
+POSITIVE_LABELS = {"喜び", "期待", "信頼"}
+NEGATIVE_LABELS = {"怒り", "嫌悪", "恐れ", "悲しみ"}
+
 def get_sentiment_score(text):
     results = sentiment_analyzer(text)
-    pos_labels = {"喜び", "期待", "信頼"}
-    neg_labels = {"悲しみ", "怒り", "恐れ", "嫌悪"}
-    score = 0
-    total = 0
-    for r in results:
-        total += r["score"]
-        if r["label"] in pos_labels:
-            score += r["score"]
-        elif r["label"] in neg_labels:
-            score -= r["score"]
-    score_normalized = score / total if total != 0 else 0  # -1～1に正規化
-    return score_normalized
+    print("モデル返却:", results)
+    if not results:
+        return 0.0
+
+    top = max(results, key=lambda x: x["score"])
+    label_name = LABEL_MAP.get(top["label"], None)
+    print("topラベル:", top["label"], "->", label_name)
+
+    if label_name in POSITIVE_LABELS:
+        return top["score"]
+    elif label_name in NEGATIVE_LABELS:
+        return -top["score"]
+    else:
+        return 0.0

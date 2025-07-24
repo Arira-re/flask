@@ -36,6 +36,7 @@ def create():
 
             # 感情分析スコアの計算
             score_value = get_sentiment_score(form.content_md.data)
+            print("感情スコア:", score_value)
             # Scoreテーブルに保存
             score = Score(user_id=current_user.id, score=score_value)
             db.session.add(score)
