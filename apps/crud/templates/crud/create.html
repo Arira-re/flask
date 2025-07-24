@@ -4,9 +4,6 @@
 <h2>ユーザー新規作成</h2>
 <form class="flex-form" action="{{ url_for('crud.create_user') }}" method="POST" novalidate>
     {{ form.csrf_token }}
-    {% for message in get_flashed_messages() %}
-        <div class="dt-auth-flash">{{ message }}</div>
-    {% endfor %}
     <div class="form-row">
         {{ form.username.label }}
         <div class="form-input">

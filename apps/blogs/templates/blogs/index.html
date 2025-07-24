@@ -4,9 +4,13 @@
 
 {% block content %}
 <h1>ブログ記事一覧</h1>
+{% if current_user.is_authenticated %}
 <p>あなたのユーザーID: {{ current_user.id }}</p>
-<p>あなたの感情スコア: {{ user.avg_score|default(0) }}</p>
+<a href="{{ url_for('auth.logout') }}" class="btn">ログアウト</a>
 <a href="{{ url_for('blogs.create') }}" class="btn">新規作成</a>
+{% else %}
+<a href="{{ url_for('auth.login') }}" class="btn">新規作成（ログインが必要です）</a>
+{% endif %}
 <ul>
     {% for post in posts %}
     <li>

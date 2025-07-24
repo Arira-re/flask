@@ -3,6 +3,8 @@
 {% block title %}ユーザー一覧{% endblock %}
 
 {% block content %}
+<a href="{{ url_for('blogs.index') }}" class="btn">ブログ記事一覧へ</a>
+<a href="{{ url_for('auth.logout') }}" class="btn">ログアウト</a>
 <h2>ユーザー一覧</h2>
 <a href="{{ url_for('crud.create_user') }}" class="btn">ユーザー新規作成</a>
 <table class="w-full table-userlist" style="background:#232323; border-radius:8px; overflow:hidden;">
@@ -20,6 +22,29 @@
         <td class="text-center">
             <a href="{{ url_for('crud.edit_user', user_id=user.id) }}" class="action-link">編集</a>
         </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2 class="mg-t20">ネガティブユーザー確認一覧</h2>
+<p>全ユーザーの平均感情スコア：<strong>{{ avg_score_overall|round(4) }}</strong></p>
+<table class="w-full table-userlist" style="background:#232323; border-radius:8px; overflow:hidden;">
+    <tr style="background:#292929; color:#fff;">
+        <th class="text-center">ID</th>
+        <th class="text-center">ユーザー名</th>
+        <th class="text-center">メールアドレス</th>
+        <th class="text-center">平均感情スコア</th>
+    </tr>
+    {% for user in negative_users %}
+    <tr style="border-bottom:1px solid #333;">
+        <td class="text-center">{{ user.id }}</td>
+        <td class="text-center">{{ user.username }}</td>
+        <td class="text-center">{{ user.email }}</td>
+        <td class="text-center">{{ user.avg_score|round(4) }}</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="5" class="text-center">ユーザーがいません。</td>
     </tr>
     {% endfor %}
 </table>

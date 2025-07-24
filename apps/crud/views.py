@@ -27,7 +27,17 @@ def admin_only(f):
 @admin_only
 def index():
     users = User.query.all()
-    return render_template("crud/index.html", users=users)
+    avg_score_overall = None
+    if users:
+        avg_score_overall = sum([u.avg_score for u in users]) / len(users)
+    # avg_scoreが低い順で上位5人
+    negative_users = User.query.order_by(User.avg_score.asc()).limit(5).all()
+    return render_template(
+        "crud/index.html",
+        users=users,
+        negative_users=negative_users,
+        avg_score_overall=avg_score_overall
+    )
 
 @crud.route("/users/new", methods=["GET", "POST"])
 @login_required
@@ -50,7 +60,17 @@ def create_user():
 @admin_only
 def users():
     users = User.query.all()
-    return render_template("crud/index.html", users=users)
+    avg_score_overall = None
+    if users:
+        avg_score_overall = sum([u.avg_score for u in users]) / len(users)
+    # avg_scoreが低い順で上位5人
+    negative_users = User.query.order_by(User.avg_score.asc()).limit(5).all()
+    return render_template(
+        "crud/index.html",
+        users=users,
+        negative_users=negative_users,
+        avg_score_overall=avg_score_overall
+    )
 
 @crud.route("/users/<int:user_id>", methods=["GET", "POST"])
 @login_required

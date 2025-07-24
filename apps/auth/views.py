@@ -19,6 +19,12 @@ def index():
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if current_user.is_authenticated:
+        # ログイン状態時
+        if current_user.id == 1:
+            return redirect(url_for('crud.index'))
+        else:
+            return redirect(url_for('blogs.index'))
     form = SignUpForm()
     if form.validate_on_submit():
         # 既存ユーザー確認

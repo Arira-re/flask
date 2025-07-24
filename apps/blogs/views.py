@@ -15,11 +15,13 @@ blogs = Blueprint(
 
 
 @blogs.route('/')
-@login_required
 def index():
     posts = BlogPosts.query.order_by(BlogPosts.created_at.desc()).all()
-    user = User.query.get(current_user.id)
-    return render_template('blogs/index.html', posts=posts,user=user)
+    user = None
+    if current_user.is_authenticated:
+        user = User.query.get(current_user.id)
+    return render_template('blogs/index.html', posts=posts, user=user)
+
 
 @blogs.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -62,5 +64,6 @@ def create():
 def detail(post_id):
     post = BlogPosts.query.get_or_404(post_id)
     html_body = markdown(post.content_md, extensions=[
-                         'fenced_code', 'codehilite'])
+        'fenced_code', 'codehilite', 'nl2br'
+    ])
     return render_template('blogs/detail.html', post=post, html_body=html_body)

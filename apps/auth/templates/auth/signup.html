@@ -6,9 +6,6 @@
 <h2>新規登録</h2>
 <form class="flex-form" method="post" novalidate>
     {{ form.hidden_tag() }}
-    {% for message in get_flashed_messages() %}
-    <div class="dt-auth-flash">{{ message }}</div>
-    {% endfor %}
     <div class="form-row">
         {{ form.username.label }}
         <div class="form-input">
