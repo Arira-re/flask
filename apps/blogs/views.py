@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
-from apps.blogs.models import BlogPosts
+from apps.blogs.models import BlogPosts, Score
 from apps.blogs.forms import BlogForm
 from apps.app import db
 from markdown import markdown
@@ -21,14 +21,12 @@ def index():
     user = User.query.get(current_user.id)
     return render_template('blogs/index.html', posts=posts,user=user)
 
-
 @blogs.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
     form = BlogForm()
     if form.validate_on_submit():
         try:
-            # ブログ投稿の作成
             post = BlogPosts(
                 user_id=current_user.id,
                 title=form.title.data,
@@ -37,11 +35,18 @@ def create():
             db.session.add(post)
 
             # 感情分析スコアの計算
-            score = get_sentiment_score(form.content_md.data)
+            score_value = get_sentiment_score(form.content_md.data)
+            # Scoreテーブルに保存
+            score = Score(user_id=current_user.id, score=score_value)
+            db.session.add(score)
 
-            # ユーザーのavg_scoreに保存
+            # Userのave_scoreをスコアの平均値に更新
             user = User.query.get(current_user.id)
-            user.avg_score = float(score)
+            all_scores = [s.score for s in user.scores]
+            if all_scores:
+                user.avg_score = sum(all_scores) / len(all_scores)
+            else:
+                user.avg_score = 0.0
 
             db.session.commit()
             flash('記事を投稿しました')
